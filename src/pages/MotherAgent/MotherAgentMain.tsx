@@ -422,6 +422,15 @@ export function MotherAgentMain() {
             className="w-full bg-transparent px-2 py-1 text-sm text-cyber-text font-sans font-medium outline-none placeholder:text-cyber-text-muted disabled:opacity-30 resize-none"
           />
           <div className="flex items-center justify-end gap-1.5">
+            {/* Soft nudge sits LEFT of the model selector so it doesn't
+                interrupt the natural "pick model → send" action flow on the
+                right. Hidden once the user is already in parasite mode. */}
+            {parasiteAgent !== PARASITE_CLAUDE_ID && (
+              <ParasiteHint
+                zh={locale === 'zh' || locale === 'zh-Hans'}
+                ccInstalled={parasiteAvailable.includes(PARASITE_CLAUDE_ID)}
+              />
+            )}
             <RemoteModelSelector
               models={modelList}
               currentModelId={parasiteAgent || agentModel}
@@ -453,17 +462,6 @@ export function MotherAgentMain() {
                 },
               ]}
             />
-            {/* Soft nudge: when the user is on a regular model (i.e. talking
-                to EchoBird's own short-memory agent_loop), surface the "?"
-                tooltip that reminds them Claude Code can take over for real
-                long-form conversations. Hidden once they're already in
-                parasite mode — no need to badger. */}
-            {parasiteAgent !== PARASITE_CLAUDE_ID && (
-              <ParasiteHint
-                zh={locale === 'zh' || locale === 'zh-Hans'}
-                ccInstalled={parasiteAvailable.includes(PARASITE_CLAUDE_ID)}
-              />
-            )}
             {isProcessing ? (
               <button
                 onClick={() => abortAgent()}
@@ -525,13 +523,13 @@ function ParasiteHint({ zh, ccInstalled }: ParasiteHintProps) {
       </span>
       <span
         role="tooltip"
-        className="pointer-events-none absolute right-0 bottom-full z-[100] mb-1.5 w-72 rounded border border-cyber-accent/40 bg-cyber-elevated px-3 py-2 text-[11px] leading-relaxed text-cyber-text shadow-cyber-card backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+        className="pointer-events-none absolute left-0 bottom-full z-[100] mb-1.5 w-72 rounded border border-cyber-accent/40 bg-cyber-elevated px-3 py-2 text-[11px] leading-relaxed text-cyber-text shadow-cyber-card backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
       >
         {/* Caret — rotated square poking down out of the tooltip's bottom edge,
-            aligned roughly above the ? glyph at the right side. */}
+            aligned roughly above the ? glyph at the left side. */}
         <span
           aria-hidden="true"
-          className="absolute -bottom-1 right-2 h-2 w-2 rotate-45 border-b border-r border-cyber-accent/40 bg-cyber-elevated"
+          className="absolute -bottom-1 left-2 h-2 w-2 rotate-45 border-b border-r border-cyber-accent/40 bg-cyber-elevated"
         />
         {tooltip}
       </span>
