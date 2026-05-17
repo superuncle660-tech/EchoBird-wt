@@ -422,26 +422,35 @@ export function MotherAgentMain() {
             className="w-full bg-transparent px-2 py-1 text-sm text-cyber-text font-sans font-medium outline-none placeholder:text-cyber-text-muted disabled:opacity-30 resize-none"
           />
           <div className="flex items-center justify-end gap-1.5">
-            <ParasitePicker
-              locale={locale}
-              available={parasiteAvailable}
-              current={parasiteAgent}
-              onChange={setParasiteAgent}
-              disabled={isProcessing}
+            <RemoteModelSelector
+              models={modelList}
+              currentModelId={parasiteAgent || agentModel}
+              loading={false}
+              onSelect={(id) => {
+                if (id === PARASITE_CLAUDE_ID) {
+                  // Switch to parasite mode. Intentionally don't clear
+                  // agentModel so the user can flip back to their previous
+                  // regular model later without having to re-select it.
+                  setParasiteAgent(PARASITE_CLAUDE_ID);
+                } else {
+                  setAgentModel(id || null);
+                  setParasiteAgent(null);
+                }
+              }}
+              placeholder={t('mother.selectModel')}
+              extras={[
+                {
+                  id: PARASITE_CLAUDE_ID,
+                  name: 'Claude Code',
+                  icon: '/icons/tools/claudecode.svg',
+                  disabled: !parasiteAvailable.includes(PARASITE_CLAUDE_ID),
+                  disabledLabel:
+                    locale === 'zh' || locale === 'zh-Hans' ? '未安装' : 'Not installed',
+                },
+              ]}
             />
-            {/* Hide EchoBird's model selector while in parasite mode — the
-                wrapped agent uses its own configured model (managed via the
-                App Manager page or the agent's own setup tool). Showing a
-                disabled picker would just be visual noise. */}
-            {!parasiteAgent && (
-              <RemoteModelSelector
-                models={modelList}
-                currentModelId={agentModel}
-                loading={false}
-                onSelect={(id) => setAgentModel(id || null)}
-                placeholder={t('mother.selectModel')}
-              />
-            )}
+            {/* Parasite chip removed — the option now lives inside the model
+                selector below the regular models, separated by a divider. */}
             {isProcessing ? (
               <button
                 onClick={() => abortAgent()}
@@ -466,83 +475,7 @@ export function MotherAgentMain() {
   );
 }
 
-// ===== Parasite Picker =====
-// Compact pill button + dropdown for switching Mother Agent into parasite
-// mode (delegate this turn to an installed CLI agent). Hidden when no
-// supported agent is installed locally.
-
-// Single-button toggle for Claude Code. Three visual states encode the full
-// UX without any verbs (no "接入" / "断开" labels):
-//   • not installed  → grey, unclickable, tooltip points the user to install
-//   • installed off  → accent-color outline, click to enter parasite mode
-//   • installed on   → accent-color filled, click to exit parasite mode
-const CLAUDE_CODE_ID = 'claudecode';
-
-interface ParasitePickerProps {
-  locale: string;
-  available: string[];
-  current: string | null;
-  onChange: (id: string | null) => void;
-  disabled: boolean;
-}
-
-function ParasitePicker({ locale, available, current, onChange, disabled }: ParasitePickerProps) {
-  const zh = locale === 'zh' || locale === 'zh-Hans';
-  const tooltip = zh
-    ? '我仅拥有短暂记忆 + 完善的安装能力，助你在 AI 赛道启航。建议安装并配置 Claude Code，让它接手为你服务。'
-    : 'I only have short-term memory + polished install/deploy skills — built to launch you into AI. Install and configure Claude Code, then let it take the conversation forward.';
-
-  const installed = available.includes(CLAUDE_CODE_ID);
-  const active = current === CLAUDE_CODE_ID;
-  const canClick = installed && !disabled;
-
-  const handleClick = () => {
-    if (!canClick) return;
-    onChange(active ? null : CLAUDE_CODE_ID);
-  };
-
-  // Match the RemoteModelSelector's chrome exactly (font-mono, px-2 py-1, no
-  // border, hover-bg lift) so the two chips read as siblings in the same
-  // toolbar. State is communicated only by text colour:
-  //   • muted + opacity-50 + not-allowed cursor when CC isn't installed
-  //   • normal text + hover bg lift when installed but not active
-  //   • accent colour when active (parasiting CC)
-  const buttonClass = !installed
-    ? 'text-cyber-text-muted opacity-50 cursor-not-allowed'
-    : active
-      ? 'text-cyber-accent hover:bg-cyber-elevated cursor-pointer'
-      : 'text-cyber-text hover:bg-cyber-elevated cursor-pointer';
-
-  return (
-    <div className="relative flex items-center gap-1">
-      <button
-        onClick={handleClick}
-        disabled={!canClick}
-        className={`px-2 py-1 text-xs font-mono transition-colors rounded ${buttonClass}`}
-      >
-        Claude Code
-      </button>
-      {/* Themed help glyph — same shape as AppManager's relay-mode "?". */}
-      <span className="group relative inline-flex items-center">
-        <span
-          aria-label={tooltip}
-          className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-cyber-elevated font-sans text-xs font-medium leading-none text-cyber-text-secondary cursor-help select-none hover:bg-cyber-accent/15 hover:text-cyber-accent transition-colors"
-        >
-          ?
-        </span>
-        <span
-          role="tooltip"
-          className="pointer-events-none absolute right-0 bottom-full z-[100] mb-1.5 w-72 rounded border border-cyber-accent/40 bg-cyber-elevated px-3 py-2 text-[11px] leading-relaxed text-cyber-text shadow-cyber-card backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
-        >
-          {/* Caret — rotated square poking down out of the tooltip's bottom edge,
-              aligned roughly above the ? glyph at the right side. */}
-          <span
-            aria-hidden="true"
-            className="absolute -bottom-1 right-2 h-2 w-2 rotate-45 border-b border-r border-cyber-accent/40 bg-cyber-elevated"
-          />
-          {tooltip}
-        </span>
-      </span>
-    </div>
-  );
-}
+// Sentinel id for the Claude Code "parasite" engine that lives in the model
+// selector's extras slot. Picking it routes the turn through the wrapped
+// Claude Code CLI instead of EchoBird's own agent_loop.
+const PARASITE_CLAUDE_ID = 'claudecode';

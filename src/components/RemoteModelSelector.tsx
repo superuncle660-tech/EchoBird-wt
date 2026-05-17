@@ -9,12 +9,28 @@ export interface ModelOption {
   icon?: string | null; // icon path from getModelIcon()
 }
 
+/** A non-model option appended below the models list (after a divider).
+ *  Used by Mother Agent to inject Claude Code as a parasite engine choice
+ *  alongside regular models — picking it activates parasite mode rather
+ *  than selecting a chat model. */
+export interface ExtraOption extends ModelOption {
+  /** When true the row renders as a non-clickable hint (e.g. CC not installed). */
+  disabled?: boolean;
+  /** Short suffix label appended after the name when disabled, e.g. "未安装". */
+  disabledLabel?: string;
+}
+
 interface RemoteModelSelectorProps {
   models: ModelOption[];
+  /** May reference a model id or an extra option id. */
   currentModelId: string | null;
   loading: boolean;
   onSelect: (modelId: string) => void;
   placeholder?: string;
+  /** Items rendered below the models with a divider above them. Disabled
+   *  extras don't fire onSelect but still appear in the menu so the user
+   *  knows the option exists and what it'd take to enable it. */
+  extras?: ExtraOption[];
 }
 
 export const RemoteModelSelector: React.FC<RemoteModelSelectorProps> = ({
@@ -23,6 +39,7 @@ export const RemoteModelSelector: React.FC<RemoteModelSelectorProps> = ({
   loading,
   onSelect,
   placeholder = 'Select model',
+  extras,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +66,11 @@ export const RemoteModelSelector: React.FC<RemoteModelSelectorProps> = ({
     }
   }, [isOpen]);
 
-  const currentModel = models.find((m) => m.id === currentModelId);
+  // Search both the regular models AND the extras so the trigger label
+  // reflects whichever the parent currently considers "active" (a model id
+  // for normal use, or e.g. "claudecode" when parasite mode is on).
+  const currentModel =
+    models.find((m) => m.id === currentModelId) || extras?.find((e) => e.id === currentModelId);
   const displayText = currentModel?.name || placeholder;
   const displayIcon = currentModel?.icon;
 
@@ -94,7 +115,7 @@ export const RemoteModelSelector: React.FC<RemoteModelSelectorProps> = ({
       </button>
 
       {/* Dropdown — opens upward */}
-      {isOpen && models.length > 0 && (
+      {isOpen && (models.length > 0 || (extras && extras.length > 0)) && (
         <div
           className="absolute bottom-full mb-1 right-0 min-w-[200px] max-w-[300px] max-h-60 overflow-y-auto
                     bg-cyber-elevated border border-cyber-border rounded-lg shadow-2xl
@@ -127,11 +148,52 @@ export const RemoteModelSelector: React.FC<RemoteModelSelectorProps> = ({
               {model.id === currentModelId && <Check size={12} className={checkClass} />}
             </div>
           ))}
-          {models.length === 0 && (
+          {models.length === 0 && (!extras || extras.length === 0) && (
             <div className="px-3 py-2 text-xs text-cyber-text-secondary font-mono">
               No models configured
             </div>
           )}
+          {extras && extras.length > 0 && models.length > 0 && (
+            <div className="my-1 border-t border-cyber-border/60" />
+          )}
+          {extras?.map((extra) => {
+            const isCurrent = extra.id === currentModelId;
+            const rowBase = 'flex items-center gap-2 px-3 py-2 text-xs font-mono transition-colors';
+            const rowState = extra.disabled
+              ? 'text-cyber-text-muted opacity-50 cursor-not-allowed'
+              : isCurrent
+                ? `cursor-pointer ${selectedItemClass}`
+                : `cursor-pointer ${unselectedItemClass}`;
+            return (
+              <div
+                key={extra.id}
+                onClick={() => {
+                  if (extra.disabled || isCurrent) return;
+                  onSelect(extra.id);
+                  setIsOpen(false);
+                }}
+                className={`${rowBase} ${rowState}`}
+              >
+                {extra.icon && (
+                  <img
+                    src={extra.icon}
+                    alt=""
+                    className="w-4 h-4 flex-shrink-0"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                )}
+                <span className="truncate flex-1">{extra.name}</span>
+                {extra.disabled && extra.disabledLabel && (
+                  <span className="flex-shrink-0 text-[10px] text-cyber-text-muted">
+                    {extra.disabledLabel}
+                  </span>
+                )}
+                {isCurrent && !extra.disabled && <Check size={12} className={checkClass} />}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
