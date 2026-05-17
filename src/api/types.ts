@@ -179,3 +179,24 @@ export type AgentEvent =
   | { type: 'done' }
   | { type: 'error'; message: string }
   | { type: 'state'; state: string };
+
+// ─── Parasite Types ───
+// Mother Agent's "parasite" mode delegates a turn to an installed CLI agent
+// (Hermes / Claude Code / OpenClaw) instead of running EchoBird's own
+// agent_loop. The event shape mirrors AgentEvent so the chat UI can reuse
+// the same renderer.
+
+export interface ParasiteSendRequest {
+  agentId: string;
+  message: string;
+  /** Model identifier passed through to agents that accept --model-style
+   *  flags (currently Claude Code). Others ignore it and use their own
+   *  configured model. */
+  model?: string;
+}
+
+export type ParasiteEvent =
+  | { type: 'text_delta'; text: string }
+  | { type: 'done' }
+  | { type: 'error'; message: string }
+  | { type: 'state'; state: string };

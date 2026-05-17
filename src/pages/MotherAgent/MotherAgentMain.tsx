@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
-import { ArrowUp, ChevronDown, Square } from 'lucide-react';
+import { ArrowUp, ChevronDown, HelpCircle, Square, Zap } from 'lucide-react';
 import { RemoteModelSelector, type ModelOption } from '../../components/RemoteModelSelector';
 import { getModelIcon } from '../../components/cards/ModelCard';
 import { PendingChipsRow } from '../../components/PendingChipsRow';
@@ -13,7 +13,7 @@ import { MA_PAGE_SIZE } from './types';
 
 // ===== Main Content (center area) — CHAT =====
 export function MotherAgentMain() {
-  const { t, locale: _locale } = useI18n();
+  const { t, locale } = useI18n();
   const {
     models,
     agentModel,
@@ -34,6 +34,9 @@ export function MotherAgentMain() {
     abortAgent,
     maDiskTotal,
     loadOlderChat,
+    parasiteAgent,
+    setParasiteAgent,
+    parasiteAvailable,
   } = useMotherAgent();
 
   // Build model list for RemoteModelSelector (with icons)
@@ -419,6 +422,13 @@ export function MotherAgentMain() {
             className="w-full bg-transparent px-2 py-1 text-sm text-cyber-text font-sans font-medium outline-none placeholder:text-cyber-text-muted disabled:opacity-30 resize-none"
           />
           <div className="flex items-center justify-end gap-1.5">
+            <ParasitePicker
+              locale={locale}
+              available={parasiteAvailable}
+              current={parasiteAgent}
+              onChange={setParasiteAgent}
+              disabled={isProcessing}
+            />
             <RemoteModelSelector
               models={modelList}
               currentModelId={agentModel}
@@ -446,6 +456,103 @@ export function MotherAgentMain() {
         </div>
         {/* Hidden file inputs */}
       </div>
+    </div>
+  );
+}
+
+// ===== Parasite Picker =====
+// Compact pill button + dropdown for switching Mother Agent into parasite
+// mode (delegate this turn to an installed CLI agent). Hidden when no
+// supported agent is installed locally.
+
+const PARASITE_LABELS: Record<string, string> = {
+  hermes: 'Hermes Agent',
+  claudecode: 'Claude Code',
+  openclaw: 'OpenClaw',
+};
+
+interface ParasitePickerProps {
+  locale: string;
+  available: string[];
+  current: string | null;
+  onChange: (id: string | null) => void;
+  disabled: boolean;
+}
+
+function ParasitePicker({ locale, available, current, onChange, disabled }: ParasitePickerProps) {
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const zh = locale === 'zh' || locale === 'zh-Hans';
+  const label = zh ? '寄生' : 'Parasite';
+  const tooltip = zh
+    ? '已安装 OpenClaw / Claude Code / Hermes Agent 时，把本轮对话委托给它们运行 — 用它们的人格、工具和记忆，本轮不走 EchoBird 自己的引擎。'
+    : "When OpenClaw / Claude Code / Hermes Agent is installed, delegate this turn to that agent — using its persona, tools, and memory instead of EchoBird's built-in engine.";
+  const activeLabel = current ? PARASITE_LABELS[current] || current : null;
+  const noneInstalled = available.length === 0;
+  const exitLabel = zh ? '退出寄生' : 'Exit parasite';
+  const noneLabel = zh ? '未检测到可寄生的代理' : 'No installed agent detected';
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, [open]);
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      <button
+        onClick={() => !disabled && !noneInstalled && setOpen((o) => !o)}
+        disabled={disabled || noneInstalled}
+        className={`flex items-center gap-1 px-2 h-7 rounded-lg text-xs border transition-colors ${
+          current
+            ? 'bg-cyber-accent/15 border-cyber-accent/50 text-cyber-accent'
+            : 'bg-cyber-surface border-cyber-border text-cyber-text-secondary hover:bg-cyber-elevated hover:text-cyber-text'
+        } disabled:opacity-40 disabled:cursor-not-allowed`}
+        title={noneInstalled ? noneLabel : tooltip}
+      >
+        <Zap size={12} className={current ? 'fill-current' : ''} />
+        <span className="font-medium">{activeLabel || label}</span>
+        <HelpCircle size={11} className="opacity-60" />
+      </button>
+      {open && (
+        <div className="absolute right-0 bottom-full mb-1 min-w-[180px] bg-cyber-elevated border border-cyber-border rounded-lg shadow-lg z-20 py-1">
+          {current && (
+            <button
+              onClick={() => {
+                onChange(null);
+                setOpen(false);
+              }}
+              className="w-full px-3 py-1.5 text-xs text-left text-cyber-text-secondary hover:bg-cyber-surface hover:text-cyber-text"
+            >
+              {exitLabel}
+            </button>
+          )}
+          {current && available.length > 0 && (
+            <div className="my-1 border-t border-cyber-border/60" />
+          )}
+          {available.map((id) => (
+            <button
+              key={id}
+              onClick={() => {
+                onChange(id);
+                setOpen(false);
+              }}
+              className={`w-full px-3 py-1.5 text-xs text-left hover:bg-cyber-surface hover:text-cyber-text ${
+                id === current ? 'text-cyber-accent' : 'text-cyber-text-secondary'
+              }`}
+            >
+              {PARASITE_LABELS[id] || id}
+            </button>
+          ))}
+          <div className="px-3 py-1.5 text-[10px] text-cyber-text-muted border-t border-cyber-border/60 mt-1 leading-snug">
+            {tooltip}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

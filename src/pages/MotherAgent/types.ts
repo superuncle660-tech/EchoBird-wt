@@ -41,6 +41,11 @@ export interface MotherAgentCtx {
   handleChatSend: () => void;
   sendMessage: (msg: string, displayText?: string, chips?: BubbleChip[]) => void;
 
+  // parasite mode — delegate this turn to an installed CLI agent
+  parasiteAgent: string | null;
+  setParasiteAgent: (id: string | null) => void;
+  parasiteAvailable: string[];
+
   // ssh servers
   sshServers: Array<{ id: string; host: string; port: string; username: string; alias?: string }>;
   addSSHServer: (server: {

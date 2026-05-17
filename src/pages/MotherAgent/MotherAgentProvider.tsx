@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useI18n } from '../../hooks/useI18n';
 import * as api from '../../api/tauri';
-import type { ModelConfig, AgentEvent } from '../../api/types';
+import type { ModelConfig, AgentEvent, ParasiteEvent } from '../../api/types';
 import { useChatPersistence } from '../../hooks/useChatPersistence';
 import type { DiskMsg } from '../../hooks/useChatPersistence';
 import { errorToKey } from '../../utils/normalizeError';
@@ -36,6 +36,32 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
   const [chatOutput, setChatOutput] = useState<ChatMessage[]>([]);
   // Per-server chat history map
   const chatHistoryMap = useRef<Map<string, ChatMessage[]>>(new Map());
+
+  // Parasite mode — when non-null, sendMessage delegates this turn to the
+  // installed CLI agent of that id (hermes / claudecode / openclaw) instead
+  // of EchoBird's own agent_loop. Persisted so the user keeps their choice
+  // across reloads.
+  const [parasiteAgent, setParasiteAgentRaw] = useState<string | null>(() =>
+    localStorage.getItem('echobird_parasite_agent')
+  );
+  const setParasiteAgent = useCallback((id: string | null) => {
+    setParasiteAgentRaw(id);
+    if (id) localStorage.setItem('echobird_parasite_agent', id);
+    else localStorage.removeItem('echobird_parasite_agent');
+  }, []);
+  const [parasiteAvailable, setParasiteAvailable] = useState<string[]>([]);
+  useEffect(() => {
+    api
+      .parasiteListInstalled()
+      .then((ids) => {
+        setParasiteAvailable(ids);
+        // If the persisted choice is no longer installed (e.g. user uninstalled
+        // hermes between sessions), clear it so we don't try to spawn a missing
+        // binary on the next turn.
+        setParasiteAgentRaw((prev) => (prev && !ids.includes(prev) ? null : prev));
+      })
+      .catch(() => setParasiteAvailable([]));
+  }, []);
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [agentState, setAgentState] = useState('idle');
@@ -272,6 +298,73 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
   // Chat scroll is managed by MotherAgentMain so the user can scroll up
   // freely while the agent is streaming.
 
+  // Subscribe to parasite events — shape mirrors agent_event so the chat
+  // renderer (ChatBubble) needs no special handling. Tool-call surface is
+  // intentionally absent in parasite mode: the wrapped CLI agent runs its
+  // own tools opaquely, and surfacing them would lie about what executed.
+  useEffect(() => {
+    let unlisten: (() => void) | null = null;
+    let cancelled = false;
+    api
+      .listenParasiteEvents((event: ParasiteEvent) => {
+        if (cancelled) return;
+        switch (event.type) {
+          case 'text_delta':
+            setChatOutput((prev) => {
+              const last = prev[prev.length - 1];
+              if (last && last.type === 'assistant') {
+                return [...prev.slice(0, -1), { ...last, text: last.text + event.text }];
+              }
+              onNewMessage?.();
+              return [...prev, { type: 'assistant', text: event.text }];
+            });
+            break;
+          case 'done':
+            if (abortTimeoutRef.current) {
+              clearTimeout(abortTimeoutRef.current);
+              abortTimeoutRef.current = null;
+            }
+            setIsProcessing(false);
+            setAgentState('idle');
+            break;
+          case 'error': {
+            if (abortTimeoutRef.current) {
+              clearTimeout(abortTimeoutRef.current);
+              abortTimeoutRef.current = null;
+            }
+            const key = errorToKey(event.message);
+            if (key !== 'error.userCancelled') {
+              const errBubble = key
+                ? { type: 'error' as const, text: '', i18nKey: key }
+                : { type: 'error' as const, text: String(event.message ?? '').slice(0, 500) };
+              setChatOutput((prev) => [...prev, errBubble]);
+            } else {
+              // Append a cancellation marker if there isn't already one.
+              setChatOutput((prev) => {
+                const last = prev[prev.length - 1];
+                if (last && last.type === 'cancelled') return prev;
+                return [...prev, { type: 'cancelled', text: '', i18nKey: 'error.userCancelled' }];
+              });
+            }
+            setIsProcessing(false);
+            setAgentState('idle');
+            break;
+          }
+          case 'state':
+            setAgentState(event.state);
+            break;
+        }
+      })
+      .then((fn) => {
+        if (cancelled) fn();
+        else unlisten = fn;
+      });
+    return () => {
+      cancelled = true;
+      unlisten?.();
+    };
+  }, []);
+
   // Subscribe to agent events
   useEffect(() => {
     let unlisten: (() => void) | null = null;
@@ -369,6 +462,10 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
       cancelled = true;
       unlisten?.();
     };
+    // Subscribe-once on mount — onNewMessage is captured by closure and the
+    // Tauri listener is torn down on unmount. Adding it to deps would
+    // re-subscribe on every parent re-render and lose in-flight chunks.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Internal send function
@@ -381,6 +478,32 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
         ...prev,
         { type: 'user', text: (displayText ?? message).trim(), chips },
       ]);
+
+      // Parasite mode: delegate this turn to an installed CLI agent. The
+      // wrapped agent (Hermes / Claude Code / OpenClaw) runs in its own
+      // environment with its own memory, skills, and provider config. We
+      // pass our model id through to those that accept it — agents whose
+      // model_arg is None (Hermes, OpenClaw) ignore the field.
+      if (parasiteAgent) {
+        try {
+          const modelData = models.find((m) => m.internalId === agentModel);
+          await api.parasiteSendMessage({
+            agentId: parasiteAgent,
+            message: message.trim(),
+            model: modelData?.modelId || modelData?.name,
+          });
+        } catch (e) {
+          const key = errorToKey(String(e));
+          const type: 'cancelled' | 'error' = key === 'error.userCancelled' ? 'cancelled' : 'error';
+          const bubble: ChatMessage = key
+            ? { type, text: '', i18nKey: key }
+            : { type, text: String(e ?? '').slice(0, 500) };
+          setChatOutput((prev) => [...prev, bubble]);
+          setIsProcessing(false);
+        }
+        return;
+      }
+
       const modelData = models.find((m) => m.internalId === agentModel);
       if (!modelData) {
         setChatOutput((prev) => [
@@ -432,7 +555,7 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
         setIsProcessing(false);
       }
     },
-    [agentModel, models, isProcessing, selectedServerId, locale]
+    [agentModel, models, isProcessing, selectedServerId, locale, parasiteAgent]
   );
 
   // Chat send (from input)
@@ -469,10 +592,14 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
         removeSSHServer,
         selectedServerId,
         selectServer,
+        parasiteAgent,
+        setParasiteAgent,
+        parasiteAvailable,
         clearChat: () => {
           setChatOutput([]);
           persistence.clearHistory();
           api.resetAgent(selectedServerId).catch(() => {});
+          if (parasiteAgent) api.parasiteReset(parasiteAgent).catch(() => {});
         },
         abortAgent: () => {
           // Idempotent on rapid multi-clicks: backend `agent_abort` is
@@ -489,7 +616,11 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
             // moment, no need to spam more requests or bubbles.
             return;
           }
-          api.abortAgent(selectedServerId).catch(() => {});
+          if (parasiteAgent) {
+            api.parasiteAbort(parasiteAgent).catch(() => {});
+          } else {
+            api.abortAgent(selectedServerId).catch(() => {});
+          }
           setChatOutput((o) => {
             const last = o[o.length - 1];
             if (last && last.type === 'cancelled') {
