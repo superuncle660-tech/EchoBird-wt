@@ -481,16 +481,15 @@ export function MotherAgentProvider({ children }: { children: React.ReactNode })
 
       // Parasite mode: delegate this turn to an installed CLI agent. The
       // wrapped agent (Hermes / Claude Code / OpenClaw) runs in its own
-      // environment with its own memory, skills, and provider config. We
-      // pass our model id through to those that accept it — agents whose
-      // model_arg is None (Hermes, OpenClaw) ignore the field.
+      // environment with its own memory, skills, tools, AND model config.
+      // EchoBird's model selector is hidden while parasite is active —
+      // model management belongs to the wrapped agent (configure via the
+      // App Manager page or that agent's own setup tool).
       if (parasiteAgent) {
         try {
-          const modelData = models.find((m) => m.internalId === agentModel);
           await api.parasiteSendMessage({
             agentId: parasiteAgent,
             message: message.trim(),
-            model: modelData?.modelId || modelData?.name,
           });
         } catch (e) {
           const key = errorToKey(String(e));

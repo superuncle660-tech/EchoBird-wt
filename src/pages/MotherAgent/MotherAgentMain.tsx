@@ -429,13 +429,19 @@ export function MotherAgentMain() {
               onChange={setParasiteAgent}
               disabled={isProcessing}
             />
-            <RemoteModelSelector
-              models={modelList}
-              currentModelId={agentModel}
-              loading={false}
-              onSelect={(id) => setAgentModel(id || null)}
-              placeholder={t('mother.selectModel')}
-            />
+            {/* Hide EchoBird's model selector while in parasite mode — the
+                wrapped agent uses its own configured model (managed via the
+                App Manager page or the agent's own setup tool). Showing a
+                disabled picker would just be visual noise. */}
+            {!parasiteAgent && (
+              <RemoteModelSelector
+                models={modelList}
+                currentModelId={agentModel}
+                loading={false}
+                onSelect={(id) => setAgentModel(id || null)}
+                placeholder={t('mother.selectModel')}
+              />
+            )}
             {isProcessing ? (
               <button
                 onClick={() => abortAgent()}
