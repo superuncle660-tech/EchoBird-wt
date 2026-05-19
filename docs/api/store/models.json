@@ -1,446 +1,482 @@
 [
-    {
-        "id": "qwen3.6-27b",
-        "name": "Qwen3.6 27B",
-        "icon": "qwen",
-        "description": "Alibaba's latest flagship dense model — top reasoning, coding & multilingual",
-        "huggingfaceRepo": "unsloth/Qwen3.6-27B-GGUF",
-        "variants": [
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "Qwen3.6-27B-Q4_K_M.gguf",
-                "fileSize": 16817244384,
-                "recommendedVRAM": "24 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "Qwen3.6-27B-Q6_K.gguf",
-                "fileSize": 22523238624,
-                "recommendedVRAM": "32 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "Qwen3.6-27B-Q8_0.gguf",
-                "fileSize": 28595763424,
-                "recommendedVRAM": "32 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "qwen3.6-35b-a3b",
-        "name": "Qwen3.6 35B-A3B (MoE)",
-        "icon": "qwen",
-        "description": "Latest Qwen MoE — 35B total, 3B active, runs as fast as 4B with frontier quality",
-        "huggingfaceRepo": "unsloth/Qwen3.6-35B-A3B-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "Qwen3.6-35B-A3B-UD-IQ2_M.gguf",
-                "fileSize": 11522702304,
-                "recommendedVRAM": "12 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
-                "fileSize": 22134528992,
-                "recommendedVRAM": "24 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "Qwen3.6-35B-A3B-UD-Q6_K.gguf",
-                "fileSize": 29308320736,
-                "recommendedVRAM": "32 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "Qwen3.6-35B-A3B-Q8_0.gguf",
-                "fileSize": 36903140320,
-                "recommendedVRAM": "48 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "gemma-4-31b",
-        "name": "Gemma 4 31B",
-        "icon": "google",
-        "description": "Google DeepMind flagship dense — 256K context, thinking mode, multimodal, Apache 2.0",
-        "huggingfaceRepo": "unsloth/gemma-4-31B-it-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "gemma-4-31B-it-UD-IQ2_M.gguf",
-                "fileSize": 10752817696,
-                "recommendedVRAM": "12 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "gemma-4-31B-it-Q4_K_M.gguf",
-                "fileSize": 18323730976,
-                "recommendedVRAM": "24 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "gemma-4-31B-it-Q6_K.gguf",
-                "fileSize": 25201484320,
-                "recommendedVRAM": "32 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "gemma-4-31B-it-Q8_0.gguf",
-                "fileSize": 32635675168,
-                "recommendedVRAM": "40 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "gemma-4-26b-a4b",
-        "name": "Gemma 4 26B-A4B (MoE)",
-        "icon": "google",
-        "description": "Google DeepMind MoE — 26B total, 4B active, runs as fast as 4B, multimodal + thinking",
-        "huggingfaceRepo": "unsloth/gemma-4-26B-A4B-it-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "gemma-4-26B-A4B-it-UD-IQ2_M.gguf",
-                "fileSize": 9974943040,
-                "recommendedVRAM": "12 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "gemma-4-26B-A4B-it-UD-Q4_K_M.gguf",
-                "fileSize": 16868240704,
-                "recommendedVRAM": "24 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "gemma-4-26B-A4B-it-UD-Q6_K.gguf",
-                "fileSize": 23172476224,
-                "recommendedVRAM": "32 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "gemma-4-26B-A4B-it-Q8_0.gguf",
-                "fileSize": 26859859264,
-                "recommendedVRAM": "32 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "nemotron-3-nano-omni-30b",
-        "name": "Nemotron 3 Nano Omni 30B-A3B",
-        "icon": "nemotron",
-        "description": "NVIDIA omni-modal MoE — 30B total, 3B active, text+image+audio reasoning",
-        "huggingfaceRepo": "unsloth/NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-UD-IQ2_M.gguf",
-                "fileSize": 18499970496,
-                "recommendedVRAM": "20 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-UD-Q4_K_M.gguf",
-                "fileSize": 23887023552,
-                "recommendedVRAM": "32 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-UD-Q6_K.gguf",
-                "fileSize": 33585499584,
-                "recommendedVRAM": "40 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-Q8_0.gguf",
-                "fileSize": 33585499584,
-                "recommendedVRAM": "40 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "granite-4.1-30b",
-        "name": "Granite 4.1 30B (MoE)",
-        "icon": "granite",
-        "description": "IBM enterprise MoE — top tool-use & function calling, Apache 2.0",
-        "huggingfaceRepo": "unsloth/granite-4.1-30b-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "granite-4.1-30b-UD-IQ2_M.gguf",
-                "fileSize": 9943574464,
-                "recommendedVRAM": "12 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "granite-4.1-30b-Q4_K_M.gguf",
-                "fileSize": 17490241472,
-                "recommendedVRAM": "24 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "granite-4.1-30b-Q6_K.gguf",
-                "fileSize": 23684179904,
-                "recommendedVRAM": "32 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "granite-4.1-30b-Q8_0.gguf",
-                "fileSize": 30674970560,
-                "recommendedVRAM": "40 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "qwen3.5-27b-opus-4.6-distill",
-        "name": "Qwen3.5 27B Opus 4.6 Distill",
-        "icon": "qwen",
-        "description": "Claude Opus 4.6 reasoning distilled onto Qwen3.5 27B — frontier logic, fully local",
-        "huggingfaceRepo": "TeichAI/Qwen3.5-27B-Claude-Opus-4.6-Distill-GGUF",
-        "variants": [
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "Qwen3.5-27b-Opus-4.6-Distill-Q4_K_M.gguf",
-                "fileSize": 16540271904,
-                "recommendedVRAM": "24 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "Qwen3.5-27b-Opus-4.6-Distill-Q6_K.gguf",
-                "fileSize": 22082528544,
-                "recommendedVRAM": "32 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "Qwen3.5-27b-Opus-4.6-Distill-Q8_0.gguf",
-                "fileSize": 28595762464,
-                "recommendedVRAM": "32 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "qwen3.5-9b",
-        "name": "Qwen3.5 9B",
-        "icon": "qwen",
-        "description": "Qwen3.5 sweet spot — 256K context, multimodal, top reasoning at 8 GB VRAM",
-        "huggingfaceRepo": "unsloth/Qwen3.5-9B-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "Qwen3.5-9B-UD-IQ2_M.gguf",
-                "fileSize": 3649365216,
-                "recommendedVRAM": "6 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "Qwen3.5-9B-Q4_K_M.gguf",
-                "fileSize": 5680522464,
-                "recommendedVRAM": "8 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "Qwen3.5-9B-Q6_K.gguf",
-                "fileSize": 7458301152,
-                "recommendedVRAM": "10 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "Qwen3.5-9B-Q8_0.gguf",
-                "fileSize": 9527502048,
-                "recommendedVRAM": "12 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "granite-4.1-8b",
-        "name": "Granite 4.1 8B",
-        "icon": "granite",
-        "description": "IBM 8B — strong tool-use, fits on 8 GB VRAM, Apache 2.0",
-        "huggingfaceRepo": "unsloth/granite-4.1-8b-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "granite-4.1-8b-UD-IQ2_M.gguf",
-                "fileSize": 3272078720,
-                "recommendedVRAM": "4 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "granite-4.1-8b-Q4_K_M.gguf",
-                "fileSize": 5347915136,
-                "recommendedVRAM": "8 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "granite-4.1-8b-Q6_K.gguf",
-                "fileSize": 7216477568,
-                "recommendedVRAM": "10 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "granite-4.1-8b-Q8_0.gguf",
-                "fileSize": 9345611136,
-                "recommendedVRAM": "12 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "gemma-4-e4b",
-        "name": "Gemma 4 E4B",
-        "icon": "google",
-        "description": "Google DeepMind edge model — multimodal (text+image+audio), thinking, 128K context",
-        "huggingfaceRepo": "unsloth/gemma-4-E4B-it-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "gemma-4-E4B-it-UD-IQ2_M.gguf",
-                "fileSize": 3530232512,
-                "recommendedVRAM": "4 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "gemma-4-E4B-it-Q4_K_M.gguf",
-                "fileSize": 4977169088,
-                "recommendedVRAM": "6 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "gemma-4-E4B-it-Q6_K.gguf",
-                "fileSize": 7074927296,
-                "recommendedVRAM": "10 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "gemma-4-E4B-it-Q8_0.gguf",
-                "fileSize": 8192950976,
-                "recommendedVRAM": "10 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "qwen3.5-4b",
-        "name": "Qwen3.5 4B",
-        "icon": "qwen",
-        "description": "Qwen's ultra-light dense — impressive quality at just 4 GB VRAM",
-        "huggingfaceRepo": "unsloth/Qwen3.5-4B-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "Qwen3.5-4B-UD-IQ2_M.gguf",
-                "fileSize": 1759997088,
-                "recommendedVRAM": "4 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "Qwen3.5-4B-Q4_K_M.gguf",
-                "fileSize": 2740937888,
-                "recommendedVRAM": "4 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "Qwen3.5-4B-Q6_K.gguf",
-                "fileSize": 3525956768,
-                "recommendedVRAM": "6 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "Qwen3.5-4B-Q8_0.gguf",
-                "fileSize": 4482403488,
-                "recommendedVRAM": "6 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    },
-    {
-        "id": "granite-4.1-3b",
-        "name": "Granite 4.1 3B",
-        "icon": "granite",
-        "description": "IBM smallest — lightweight tool-use & instruction following, runs on CPU",
-        "huggingfaceRepo": "unsloth/granite-4.1-3b-GGUF",
-        "variants": [
-            {
-                "quantization": "UD-IQ2_M",
-                "fileName": "granite-4.1-3b-UD-IQ2_M.gguf",
-                "fileSize": 1285053760,
-                "recommendedVRAM": "2 GB"
-            },
-            {
-                "quantization": "Q4_K_M",
-                "fileName": "granite-4.1-3b-Q4_K_M.gguf",
-                "fileSize": 2099502400,
-                "recommendedVRAM": "3 GB"
-            },
-            {
-                "quantization": "Q6_K",
-                "fileName": "granite-4.1-3b-Q6_K.gguf",
-                "fileSize": 2795617600,
-                "recommendedVRAM": "4 GB"
-            },
-            {
-                "quantization": "Q8_0",
-                "fileName": "granite-4.1-3b-Q8_0.gguf",
-                "fileSize": 3619691840,
-                "recommendedVRAM": "4 GB"
-            }
-        ],
-        "runtimes": [
-            "llama-server",
-            "vllm",
-            "sglang"
-        ]
-    }
+  {
+    "id": "qwen3.6-27b",
+    "name": "Qwen3.6 27B",
+    "icon": "qwen",
+    "description": "Alibaba's latest flagship dense model — top reasoning, coding & multilingual",
+    "huggingfaceRepo": "unsloth/Qwen3.6-27B-GGUF",
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "Qwen3.6-27B-Q4_K_M.gguf",
+        "fileSize": 16817244384,
+        "recommendedVRAM": "24 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "Qwen3.6-27B-Q6_K.gguf",
+        "fileSize": 22523238624,
+        "recommendedVRAM": "32 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "Qwen3.6-27B-Q8_0.gguf",
+        "fileSize": 28595763424,
+        "recommendedVRAM": "32 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B-A3B (MoE)",
+    "icon": "qwen",
+    "description": "Latest Qwen MoE — 35B total, 3B active, runs as fast as 4B with frontier quality",
+    "huggingfaceRepo": "unsloth/Qwen3.6-35B-A3B-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "Qwen3.6-35B-A3B-UD-IQ2_M.gguf",
+        "fileSize": 11522702304,
+        "recommendedVRAM": "12 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
+        "fileSize": 22134528992,
+        "recommendedVRAM": "24 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "Qwen3.6-35B-A3B-UD-Q6_K.gguf",
+        "fileSize": 29308320736,
+        "recommendedVRAM": "32 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "Qwen3.6-35B-A3B-Q8_0.gguf",
+        "fileSize": 36903140320,
+        "recommendedVRAM": "48 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "qwen3.6-35b-a3b-opus-4.7-distill",
+    "name": "Qwen3.6 35B-A3B Opus 4.7 Distill (MoE)",
+    "icon": "qwen",
+    "description": "Qwen3.6 MoE distilled from Claude Opus 4.7 — APEX quants by the LocalAI team. Experimental: teacher is Anthropic API output",
+    "huggingfaceRepo": "mudler/Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-GGUF",
+    "variants": [
+      {
+        "quantization": "I-Compact",
+        "fileName": "Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf",
+        "fileSize": 17293089856,
+        "recommendedVRAM": "20 GB"
+      },
+      {
+        "quantization": "I-Quality",
+        "fileName": "Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Quality.gguf",
+        "fileSize": 22819402816,
+        "recommendedVRAM": "24 GB"
+      },
+      {
+        "quantization": "I-Balanced",
+        "fileName": "Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Balanced.gguf",
+        "fileSize": 25624958016,
+        "recommendedVRAM": "32 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "gemma-4-31b",
+    "name": "Gemma 4 31B",
+    "icon": "google",
+    "description": "Google DeepMind flagship dense — 256K context, thinking mode, multimodal, Apache 2.0",
+    "huggingfaceRepo": "unsloth/gemma-4-31B-it-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "gemma-4-31B-it-UD-IQ2_M.gguf",
+        "fileSize": 10752817696,
+        "recommendedVRAM": "12 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "gemma-4-31B-it-Q4_K_M.gguf",
+        "fileSize": 18323730976,
+        "recommendedVRAM": "24 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "gemma-4-31B-it-Q6_K.gguf",
+        "fileSize": 25201484320,
+        "recommendedVRAM": "32 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "gemma-4-31B-it-Q8_0.gguf",
+        "fileSize": 32635675168,
+        "recommendedVRAM": "40 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "gemma-4-26b-a4b",
+    "name": "Gemma 4 26B-A4B (MoE)",
+    "icon": "google",
+    "description": "Google DeepMind MoE — 26B total, 4B active, runs as fast as 4B, multimodal + thinking",
+    "huggingfaceRepo": "unsloth/gemma-4-26B-A4B-it-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "gemma-4-26B-A4B-it-UD-IQ2_M.gguf",
+        "fileSize": 9974943040,
+        "recommendedVRAM": "12 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "gemma-4-26B-A4B-it-UD-Q4_K_M.gguf",
+        "fileSize": 16868240704,
+        "recommendedVRAM": "24 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "gemma-4-26B-A4B-it-UD-Q6_K.gguf",
+        "fileSize": 23172476224,
+        "recommendedVRAM": "32 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "gemma-4-26B-A4B-it-Q8_0.gguf",
+        "fileSize": 26859859264,
+        "recommendedVRAM": "32 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "nemotron-3-nano-omni-30b",
+    "name": "Nemotron 3 Nano Omni 30B-A3B",
+    "icon": "nemotron",
+    "description": "NVIDIA omni-modal MoE — 30B total, 3B active, text+image+audio reasoning",
+    "huggingfaceRepo": "unsloth/NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-UD-IQ2_M.gguf",
+        "fileSize": 18499970496,
+        "recommendedVRAM": "20 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-UD-Q4_K_M.gguf",
+        "fileSize": 23887023552,
+        "recommendedVRAM": "32 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-UD-Q6_K.gguf",
+        "fileSize": 33585499584,
+        "recommendedVRAM": "40 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-Q8_0.gguf",
+        "fileSize": 33585499584,
+        "recommendedVRAM": "40 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "granite-4.1-30b",
+    "name": "Granite 4.1 30B (MoE)",
+    "icon": "granite",
+    "description": "IBM enterprise MoE — top tool-use & function calling, Apache 2.0",
+    "huggingfaceRepo": "unsloth/granite-4.1-30b-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "granite-4.1-30b-UD-IQ2_M.gguf",
+        "fileSize": 9943574464,
+        "recommendedVRAM": "12 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "granite-4.1-30b-Q4_K_M.gguf",
+        "fileSize": 17490241472,
+        "recommendedVRAM": "24 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "granite-4.1-30b-Q6_K.gguf",
+        "fileSize": 23684179904,
+        "recommendedVRAM": "32 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "granite-4.1-30b-Q8_0.gguf",
+        "fileSize": 30674970560,
+        "recommendedVRAM": "40 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "qwen3.6-27b-opus-distill-v2",
+    "name": "Qwen3.6 27B Opus Distill v2",
+    "icon": "qwen",
+    "description": "Qwen3.6 27B with Claude Opus 4.x reasoning distilled in — upgraded base + larger sample set over the original 4.6 distill",
+    "huggingfaceRepo": "TeichAI/Qwen3.6-27B-Claude-Opus-Reasoning-Distill-v2-GGUF",
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "Qwen3.6-27B-Claude-Opus-Reasoning-Distill.q4_k_m.gguf",
+        "fileSize": 16547399168,
+        "recommendedVRAM": "24 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "Qwen3.6-27B-Claude-Opus-Reasoning-Distill.q6_k.gguf",
+        "fileSize": 22082528768,
+        "recommendedVRAM": "32 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "Qwen3.6-27B-Claude-Opus-Reasoning-Distill.q8_0.gguf",
+        "fileSize": 28595762688,
+        "recommendedVRAM": "32 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "qwen3.5-9b",
+    "name": "Qwen3.5 9B",
+    "icon": "qwen",
+    "description": "Qwen3.5 sweet spot — 256K context, multimodal, top reasoning at 8 GB VRAM",
+    "huggingfaceRepo": "unsloth/Qwen3.5-9B-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "Qwen3.5-9B-UD-IQ2_M.gguf",
+        "fileSize": 3649365216,
+        "recommendedVRAM": "6 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "Qwen3.5-9B-Q4_K_M.gguf",
+        "fileSize": 5680522464,
+        "recommendedVRAM": "8 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "Qwen3.5-9B-Q6_K.gguf",
+        "fileSize": 7458301152,
+        "recommendedVRAM": "10 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "Qwen3.5-9B-Q8_0.gguf",
+        "fileSize": 9527502048,
+        "recommendedVRAM": "12 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "negentropy-opus-4.7-9b",
+    "name": "Negentropy Opus 4.7 9B",
+    "icon": "qwen",
+    "description": "Qwen3.5 9B with Claude Opus 4.7 reasoning reconstructed via Trace Inversion — independent arXiv-backed method by Jackrong",
+    "huggingfaceRepo": "Jackrong/Negentropy-claude-opus-4.7-9B-GGUF",
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "Negentropy-claude-opus-4.7-9B-Q4_K_M.gguf",
+        "fileSize": 5629109376,
+        "recommendedVRAM": "8 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "Negentropy-claude-opus-4.7-9B-Q6_K.gguf",
+        "fileSize": 7359259776,
+        "recommendedVRAM": "10 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "Negentropy-claude-opus-4.7-9B-Q8_0.gguf",
+        "fileSize": 9527501952,
+        "recommendedVRAM": "12 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "granite-4.1-8b",
+    "name": "Granite 4.1 8B",
+    "icon": "granite",
+    "description": "IBM 8B — strong tool-use, fits on 8 GB VRAM, Apache 2.0",
+    "huggingfaceRepo": "unsloth/granite-4.1-8b-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "granite-4.1-8b-UD-IQ2_M.gguf",
+        "fileSize": 3272078720,
+        "recommendedVRAM": "4 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "granite-4.1-8b-Q4_K_M.gguf",
+        "fileSize": 5347915136,
+        "recommendedVRAM": "8 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "granite-4.1-8b-Q6_K.gguf",
+        "fileSize": 7216477568,
+        "recommendedVRAM": "10 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "granite-4.1-8b-Q8_0.gguf",
+        "fileSize": 9345611136,
+        "recommendedVRAM": "12 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "gemma-4-e4b",
+    "name": "Gemma 4 E4B",
+    "icon": "google",
+    "description": "Google DeepMind edge model — multimodal (text+image+audio), thinking, 128K context",
+    "huggingfaceRepo": "unsloth/gemma-4-E4B-it-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "gemma-4-E4B-it-UD-IQ2_M.gguf",
+        "fileSize": 3530232512,
+        "recommendedVRAM": "4 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "gemma-4-E4B-it-Q4_K_M.gguf",
+        "fileSize": 4977169088,
+        "recommendedVRAM": "6 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "gemma-4-E4B-it-Q6_K.gguf",
+        "fileSize": 7074927296,
+        "recommendedVRAM": "10 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "gemma-4-E4B-it-Q8_0.gguf",
+        "fileSize": 8192950976,
+        "recommendedVRAM": "10 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "qwen3.5-4b",
+    "name": "Qwen3.5 4B",
+    "icon": "qwen",
+    "description": "Qwen's ultra-light dense — impressive quality at just 4 GB VRAM",
+    "huggingfaceRepo": "unsloth/Qwen3.5-4B-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "Qwen3.5-4B-UD-IQ2_M.gguf",
+        "fileSize": 1759997088,
+        "recommendedVRAM": "4 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "Qwen3.5-4B-Q4_K_M.gguf",
+        "fileSize": 2740937888,
+        "recommendedVRAM": "4 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "Qwen3.5-4B-Q6_K.gguf",
+        "fileSize": 3525956768,
+        "recommendedVRAM": "6 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "Qwen3.5-4B-Q8_0.gguf",
+        "fileSize": 4482403488,
+        "recommendedVRAM": "6 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "negentropy-opus-4.7-4b",
+    "name": "Negentropy Opus 4.7 4B",
+    "icon": "qwen",
+    "description": "Qwen3.5 4B with Claude Opus 4.7 reasoning via Trace Inversion — frontier-class logic on a 4 GB VRAM budget",
+    "huggingfaceRepo": "Jackrong/Negentropy-claude-opus-4.7-4B-GGUF",
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "Negentropy-claude-opus-4.7-4B-Q4_K_M.gguf",
+        "fileSize": 2708804608,
+        "recommendedVRAM": "4 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "Negentropy-claude-opus-4.7-4B-Q6_K.gguf",
+        "fileSize": 3464055808,
+        "recommendedVRAM": "4 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "Negentropy-claude-opus-4.7-4B-Q8_0.gguf",
+        "fileSize": 4482403328,
+        "recommendedVRAM": "6 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  },
+  {
+    "id": "granite-4.1-3b",
+    "name": "Granite 4.1 3B",
+    "icon": "granite",
+    "description": "IBM smallest — lightweight tool-use & instruction following, runs on CPU",
+    "huggingfaceRepo": "unsloth/granite-4.1-3b-GGUF",
+    "variants": [
+      {
+        "quantization": "UD-IQ2_M",
+        "fileName": "granite-4.1-3b-UD-IQ2_M.gguf",
+        "fileSize": 1285053760,
+        "recommendedVRAM": "2 GB"
+      },
+      {
+        "quantization": "Q4_K_M",
+        "fileName": "granite-4.1-3b-Q4_K_M.gguf",
+        "fileSize": 2099502400,
+        "recommendedVRAM": "3 GB"
+      },
+      {
+        "quantization": "Q6_K",
+        "fileName": "granite-4.1-3b-Q6_K.gguf",
+        "fileSize": 2795617600,
+        "recommendedVRAM": "4 GB"
+      },
+      {
+        "quantization": "Q8_0",
+        "fileName": "granite-4.1-3b-Q8_0.gguf",
+        "fileSize": 3619691840,
+        "recommendedVRAM": "4 GB"
+      }
+    ],
+    "runtimes": ["llama-server", "vllm", "sglang"]
+  }
 ]
