@@ -1315,7 +1315,7 @@ dependencies = [
 [[package]]
 name = "echobird_core"
 version = "0.1.0"
-source = "git+https://github.com/edison7009/EchoBird-secret-.git?branch=main#86f7077287797343daf4c6c44e2ec3f6e72284b1"
+source = "git+https://github.com/edison7009/EchoBird-secret-.git?branch=main#02084b55fecaac74e4b2ccf23c941f05e6eb5405"
 dependencies = [
  "aes-gcm",
  "async-ssh2-tokio",
@@ -3204,9 +3204,9 @@ dependencies = [
 
 [[package]]
 name = "num-conv"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6673768db2d862beb9b39a78fdcb1a69439615d5794a1be50caa9bc92c81967"
+checksum = "521739c6d2bac4aa25192232afe6841231376b2b26d4d9fae5ecf8ca5772e441"
 
 [[package]]
 name = "num-derive"
