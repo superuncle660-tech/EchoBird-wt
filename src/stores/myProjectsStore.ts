@@ -39,6 +39,18 @@ export type MyProjectInput = Omit<MyProject, 'id' | 'createdAt'>;
 const LS_KEY = 'echobird_my_projects';
 const SEED_FLAG_KEY = 'echobird_my_projects_seeded';
 
+// Build the bundled models.json path for a seeded tool. tool.detectedPath
+// is the tool dir (e.g. E:\EchoBird\tools\reversi); we append models.json
+// using whichever separator the path already speaks. The result is what
+// users reference as "the schema file" — same file shipped at
+// tools/<id>/models.json in the public repo.
+const modelsJsonPathFor = (toolDir: string): string => {
+  if (!toolDir) return '';
+  const trimmed = toolDir.replace(/[\\/]$/, '');
+  const sep = trimmed.includes('\\') ? '\\' : '/';
+  return `${trimmed}${sep}models.json`;
+};
+
 // Bundled tools we drop into the project list on the user's first visit.
 // Order here is the order rendered on the page.
 const SEED_TOOL_IDS = ['reversi', 'translator'] as const;
@@ -136,6 +148,26 @@ export const useMyProjectsStore = create<MyProjectsState>((set, get) => ({
     set({ projects: loadFromStorage() });
   },
   seedBuiltins: (tools, locale) => {
+    // ── Migration: earlier seed runs (before v2) stored the runtime config
+    // file (~/.echobird/<id>.json) in `modelsJsonPath`. The field is meant
+    // for the schema file the user studies, which lives at
+    // <tool_dir>/models.json. Rewrite any seeded entry that still has the
+    // old wrong path. Cheap and idempotent — runs every time but only
+    // touches store when something actually changes.
+    const before = get().projects;
+    const migrated = before.map((p) => {
+      if (!p.linkedToolId) return p;
+      if (p.modelsJsonPath.endsWith('models.json')) return p;
+      const tool = tools.find((tt) => tt.id === p.linkedToolId);
+      if (!tool?.detectedPath) return p;
+      return { ...p, modelsJsonPath: modelsJsonPathFor(tool.detectedPath) };
+    });
+    if (migrated.some((p, i) => p !== before[i])) {
+      saveToStorage(migrated);
+      set({ projects: migrated });
+    }
+
+    // ── First-run seed
     if (localStorage.getItem(SEED_FLAG_KEY) === '1') return;
 
     const seeded: MyProject[] = [];
@@ -147,7 +179,7 @@ export const useMyProjectsStore = create<MyProjectsState>((set, get) => ({
         name: pickToolName(tool, locale),
         iconPath: `./icons/tools/${id}.svg`,
         launcherPath: tool.detectedPath || '',
-        modelsJsonPath: tool.configPath || '',
+        modelsJsonPath: modelsJsonPathFor(tool.detectedPath || ''),
         createdAt: Date.now(),
         linkedToolId: id,
       });

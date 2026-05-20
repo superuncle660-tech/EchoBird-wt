@@ -230,10 +230,33 @@ const AddProjectDialog: React.FC<{
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
 
+  // Heuristic: pass the field's current value to the dialog as defaultPath
+  // only when it looks like a real filesystem path. Vite-served URLs (the
+  // ./icons/... seed paths) would just confuse the OS dialog.
+  const looksLikeAbsolutePath = (p: string): boolean => {
+    if (!p) return false;
+    if (p.startsWith('./') || p.startsWith('../')) return false;
+    if (/^https?:/.test(p) || p.startsWith('data:')) return false;
+    // Windows drive (C:\, D:/, etc.) or UNC (\\?\, \\server\)
+    if (/^[A-Za-z]:[\\/]/.test(p) || p.startsWith('\\\\')) return true;
+    // POSIX absolute
+    if (p.startsWith('/')) return true;
+    return false;
+  };
+
   const pickFile = useCallback(
-    async (filters: { name: string; extensions: string[] }[], setter: (v: string) => void) => {
+    async (
+      filters: { name: string; extensions: string[] }[],
+      setter: (v: string) => void,
+      currentValue: string
+    ) => {
       try {
-        const result = await openDialog({ multiple: false, filters });
+        const opts: { multiple: false; filters: typeof filters; defaultPath?: string } = {
+          multiple: false,
+          filters,
+        };
+        if (looksLikeAbsolutePath(currentValue)) opts.defaultPath = currentValue;
+        const result = await openDialog(opts);
         if (typeof result === 'string') setter(result);
       } catch (e) {
         console.error('[MyProjects] file picker failed:', e);
@@ -297,7 +320,11 @@ const AddProjectDialog: React.FC<{
               value={iconPath}
               placeholder={PLACEHOLDER_ICON}
               onClick={() =>
-                pickFile([{ name: 'Icon', extensions: ['ico', 'svg', 'png'] }], setIconPath)
+                pickFile(
+                  [{ name: 'Icon', extensions: ['ico', 'svg', 'png'] }],
+                  setIconPath,
+                  iconPath
+                )
               }
             />
           </FieldLabel>
@@ -314,7 +341,8 @@ const AddProjectDialog: React.FC<{
                   navigator.platform.toLowerCase().includes('win')
                     ? [{ name: 'Executable', extensions: ['exe'] }]
                     : [],
-                  setLauncherPath
+                  setLauncherPath,
+                  launcherPath
                 )
               }
             />
@@ -325,7 +353,11 @@ const AddProjectDialog: React.FC<{
               value={modelsJsonPath}
               placeholder={PLACEHOLDER_MODELS}
               onClick={() =>
-                pickFile([{ name: 'models.json', extensions: ['json'] }], setModelsJsonPath)
+                pickFile(
+                  [{ name: 'models.json', extensions: ['json'] }],
+                  setModelsJsonPath,
+                  modelsJsonPath
+                )
               }
             />
           </FieldLabel>
