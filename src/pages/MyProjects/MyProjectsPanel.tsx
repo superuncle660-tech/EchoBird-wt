@@ -144,7 +144,7 @@ export const MyProjectsBottom: React.FC = () => {
   const buttonDisabled = !project || (!willApply && !willLaunch) || isLaunching;
 
   const handleLaunch = async () => {
-    if (!project) return;
+    if (!project || isLaunching) return;
     setIsLaunching(true);
     try {
       // 1) Optionally write model into the user's configFile per their
@@ -177,7 +177,9 @@ export const MyProjectsBottom: React.FC = () => {
         }
       }
     } finally {
-      setIsLaunching(false);
+      // Brief debounce — same UX guard AppManager has, prevents a
+      // double-tap from double-applying / double-spawning.
+      setTimeout(() => setIsLaunching(false), 800);
     }
   };
 
