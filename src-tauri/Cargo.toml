@@ -28,7 +28,7 @@ echobird_core = { git = "https://github.com/edison7009/EchoBird-secret-.git", br
 # CARGO_MANIFEST_DIR to find tauri.conf.json. Every other Tauri-related
 # runtime dependency (plugins called at startup, services, commands) is
 # declared by echobird_core.
-tauri = { version = "2", features = ["tray-icon"] }
+tauri = { version = "2", features = ["protocol-asset", "tray-icon"] }
 
 # Tauri plugins whose **permissions** are referenced from capabilities/
 # *.json must be direct dependencies of the crate that runs tauri-build
