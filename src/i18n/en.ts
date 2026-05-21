@@ -175,9 +175,9 @@ const en: Translations = {
   'toolCat.utility': 'Utilities',
   // Agent Worker tabs
   'agent.modelsTab': 'MODELS',
-  'agent.codexRelayLabel': 'Relay mode',
+  'agent.codexRelayLabel': 'API Router',
   'agent.codexRelayHint':
-    'Connects to the official server via a relay; the model ID served by the relay or API Router must belong to the same company as the app.',
+    'A data-forwarding scheme provided by an API relay or API Router. Do not enable this when using third-party models (e.g. DeepSeek / Qwen)!',
   'agent.installViaMother': 'AI Auto-Install',
   // ToolCard labels
   'tool.models': 'Models',

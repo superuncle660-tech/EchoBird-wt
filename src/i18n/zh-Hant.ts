@@ -154,9 +154,9 @@ const zhHant: Partial<Translations> = {
   'toolCat.desktop': '桌面端',
   'toolCat.utility': '工具',
   'agent.modelsTab': '模型',
-  'agent.codexRelayLabel': '中轉模式',
+  'agent.codexRelayLabel': 'API Router',
   'agent.codexRelayHint':
-    '透過中轉連接官方伺服器，且中轉站或 API Router 提供的模型 ID 與應用屬同一家公司。',
+    '由 API 中轉站或 API Router 提供的資料轉發方案，如果你是第三方模型（如 DeepSeek / Qwen 等）請不要開啟！',
   'agent.installViaMother': 'AI 自動安裝',
   'tool.models': '模型',
   'tool.app': '應用',

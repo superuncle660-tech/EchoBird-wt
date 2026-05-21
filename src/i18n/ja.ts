@@ -159,9 +159,9 @@ const ja: Partial<Translations> = {
   'toolCat.desktop': 'デスクトップ',
   'toolCat.utility': 'ユーティリティ',
   'agent.modelsTab': 'モデル',
-  'agent.codexRelayLabel': '中継モード',
+  'agent.codexRelayLabel': 'API Router',
   'agent.codexRelayHint':
-    '中継経由で公式サーバーへ接続。中継または API Router が提供するモデル ID とアプリが同じ会社のものに限ります。',
+    'API 中継または API Router が提供するデータ転送方式。サードパーティモデル(DeepSeek / Qwen など)では有効にしないでください!',
   'agent.installViaMother': 'AI 自動インストール',
   'tool.models': 'モデル',
   'tool.app': 'アプリ',
