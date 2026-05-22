@@ -106,9 +106,10 @@ const CN_COURSES: Course[] = [
   },
   {
     id: 'cn-liyupi-ai-guide',
-    name: 'AI 编程指南',
-    url: 'https://github.com/liyupi/ai-guide',
-    description: 'GitHub 14.3k stars 的中文 AI 资源大全,涵盖 Vibe Coding、Claude 玩法、AI 产品变现',
+    name: 'AI 知识库启航',
+    url: 'https://ai.codefather.cn/library/1936010874183520257',
+    description:
+      '程序员鱼皮主理的中文 AI 入门知识库,涵盖 Vibe Coding、Claude 玩法、AI 产品变现等实战路径',
     category: 'AI 编程',
     lang: 'zh',
   },
