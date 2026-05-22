@@ -98,7 +98,7 @@ const CN_COURSES: Course[] = [
   },
   {
     id: 'cn-datawhale-easy-vibe',
-    name: 'Datawhale · Easy-Vibe',
+    name: 'Easy-Vibe · Vibe Coding 入门',
     url: 'https://datawhalechina.github.io/easy-vibe/welcome.html',
     description: 'Datawhale 出品的零基础 Vibe Coding 四阶段课程,GitHub 13.9k stars,中文社区背书',
     category: 'AI 编程',
@@ -106,7 +106,7 @@ const CN_COURSES: Course[] = [
   },
   {
     id: 'cn-liyupi-ai-guide',
-    name: '程序员鱼皮 · AI 编程指南',
+    name: 'AI 编程指南',
     url: 'https://github.com/liyupi/ai-guide',
     description: 'GitHub 14.3k stars 的中文 AI 资源大全,涵盖 Vibe Coding、Claude 玩法、AI 产品变现',
     category: 'AI 编程',
