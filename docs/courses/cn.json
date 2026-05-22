@@ -1,5 +1,5 @@
 {
-  "categories": ["AI 创业", "AI 编程", "AI 内容创作", "Prompt 与 Agent", "学习平台"],
+  "categories": ["AI 创业", "AI 编程", "Prompt 与 Agent", "学习平台"],
   "courses": [
     {
       "id": "cn-claude-code-quickstart",
@@ -37,18 +37,25 @@
       "category": "AI 编程"
     },
     {
+      "id": "cn-bilibili-qiuzhi-claude-code",
+      "name": "秋芝 · 全面掌握 Claude Code 保姆教学",
+      "url": "https://www.bilibili.com/video/BV1NvRyBzEhq/",
+      "description": "B 站 UP 主秋芝出品,从安装到高级用法一次讲全的 Claude Code 保姆级教程",
+      "category": "AI 编程"
+    },
+    {
+      "id": "cn-bilibili-qiuzhi-codex",
+      "name": "秋芝 · Codex 零基础保姆教程",
+      "url": "https://www.bilibili.com/video/BV1Nd596vEyU/",
+      "description": "B 站 UP 主秋芝出品,10 个实战场景带你从 0 拉通 Codex 全流程",
+      "category": "AI 编程"
+    },
+    {
       "id": "cn-tukuaiai-vibe-coding",
       "name": "Vibe Coding 中文教程",
       "url": "https://github.com/tukuaiai/vibe-coding-cn",
       "description": "Prompt / Skill / Workflow / Codex 实战的中文 Vibe Coding 教程仓库",
       "category": "AI 编程"
-    },
-    {
-      "id": "cn-bilibili-coze-jianying",
-      "name": "Coze + 剪映 智能体保姆级搭建",
-      "url": "https://www.bilibili.com/video/BV1cjoCY3EbD/",
-      "description": "DeepSeek + 通义万相 + Vidu + 剪映全流程,从 0 搭一个能批量出短视频的智能体",
-      "category": "AI 内容创作"
     },
     {
       "id": "cn-baoyu-share",
