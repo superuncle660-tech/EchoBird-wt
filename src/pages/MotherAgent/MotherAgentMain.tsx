@@ -6,6 +6,7 @@ import { PendingChipsRow } from '../../components/PendingChipsRow';
 import { ChatBubble, ToolCallCard } from '../../components/chat';
 import { buildPendingMessage } from '../../utils/buildPendingMessage';
 import { useI18n } from '../../hooks/useI18n';
+import { useToast } from '../../components/Toast';
 import * as api from '../../api/tauri';
 import { useNavigationStore } from '../../stores/navigationStore';
 import { useMotherAgent } from './context';
@@ -14,6 +15,7 @@ import { MA_PAGE_SIZE } from './types';
 // ===== Main Content (center area) — CHAT =====
 export function MotherAgentMain() {
   const { t } = useI18n();
+  const { showToast } = useToast();
   const {
     models,
     agentModel,
@@ -433,6 +435,10 @@ export function MotherAgentMain() {
               currentModelId={parasiteAgent || agentModel}
               loading={false}
               onSelect={(id) => {
+                const currentId = parasiteAgent || agentModel;
+                if (id && id !== currentId && chatOutput.length > 0) {
+                  showToast('warning', t('mother.switchEngineHint'), undefined, 5000);
+                }
                 if (id === PARASITE_CLAUDE_ID) {
                   // Switch to parasite mode. Intentionally don't clear
                   // agentModel so the user can flip back to their previous

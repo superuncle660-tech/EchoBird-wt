@@ -240,6 +240,8 @@ export type TKey =
   // Parasite "?" tooltip (next to model selector)
   | 'mother.parasiteTipInstalled'
   | 'mother.parasiteTipNotInstalled'
+  // Toast shown when user switches model or Claude Code mid-chat
+  | 'mother.switchEngineHint'
   // Terminal status bar
   | 'terminal.thinking'
   // SSH Guide
