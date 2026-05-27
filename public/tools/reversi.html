@@ -584,6 +584,12 @@ Line 2: one short playful comment (${t.aiLang})`;
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + MODEL.apiKey,
+                    // OpenRouter app attribution — aggregate this tool's traffic
+                    // under the main EchoBird entry. Mirrors the headers set in
+                    // EchoBird-secret/src/services/llm_client.rs so Reversi/Translator
+                    // don't get bucketed as "Unknown" on OpenRouter rankings.
+                    'HTTP-Referer': 'https://echobird.ai',
+                    'X-Title': 'EchoBird',
                 },
                 body: JSON.stringify({
                     model: MODEL.model,

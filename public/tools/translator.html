@@ -711,6 +711,11 @@
                                 'Content-Type': 'application/json',
                                 'x-api-key': MODEL.apiKey,
                                 'anthropic-version': '2023-06-01',
+                                // OpenRouter app attribution — aggregate this tool's
+                                // traffic under the main EchoBird entry. See the
+                                // matching headers in EchoBird-secret/llm_client.rs.
+                                'HTTP-Referer': 'https://echobird.ai',
+                                'X-Title': 'EchoBird',
                             },
                             body: JSON.stringify({
                                 model: MODEL.model,
@@ -730,7 +735,13 @@
                         if (!fbUrl.endsWith('/v1')) fbUrl += '/v1';
                         const resp = await fetch(fbUrl + '/chat/completions', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + MODEL.apiKey },
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + MODEL.apiKey,
+                                // OpenRouter app attribution (mirrors llm_client.rs).
+                                'HTTP-Referer': 'https://echobird.ai',
+                                'X-Title': 'EchoBird',
+                            },
                             body: JSON.stringify({ model: MODEL.model, messages: [{ role: 'user', content: prompt }], max_tokens: 4096, temperature: 0.3 })
                         });
                         if (!resp.ok) throw new Error(`API ${resp.status}: ${resp.statusText}`);
@@ -750,7 +761,13 @@
                     if (!apiUrl.endsWith('/v1')) apiUrl += '/v1';
                     const resp = await fetch(apiUrl + '/chat/completions', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + MODEL.apiKey },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + MODEL.apiKey,
+                            // OpenRouter app attribution (mirrors llm_client.rs).
+                            'HTTP-Referer': 'https://echobird.ai',
+                            'X-Title': 'EchoBird',
+                        },
                         body: JSON.stringify({
                             model: MODEL.model,
                             messages: [{ role: 'user', content: prompt }],
