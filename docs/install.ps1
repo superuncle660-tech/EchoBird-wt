@@ -28,7 +28,11 @@ Write-Host "  Fetching latest version..." -ForegroundColor Gray
 $latestVer = $null
 $downloadUrl = $null
 
-# Tier 1: GitHub Releases API.
+# Tier 1: GitHub Releases API. Silent failure — try fallback before
+# saying anything to the user. We also suppress the raw exception
+# message because PowerShell localizes it ("远程服务器返回错误..." on
+# zh-CN systems), and leaking the OS locale into the install banner
+# would mix scripts. Final user-visible copy stays English-only.
 try {
     $release = Invoke-RestMethod "https://api.github.com/repos/edison7009/EchoBird/releases/latest" `
         -Headers @{ "User-Agent" = "EchoBird-Install" } -TimeoutSec 15
@@ -43,10 +47,10 @@ try {
         $downloadUrl = $winAsset.browser_download_url
     }
 } catch {
-    Write-Host "  GitHub API unreachable ($($_.Exception.Message)), trying echobird.ai..." -ForegroundColor DarkYellow
+    # Silent — Tier 2 will retry via echobird.ai.
 }
 
-# Tier 2: echobird.ai manifest fallback.
+# Tier 2: echobird.ai manifest fallback. Also silent.
 if (-not $latestVer) {
     try {
         $manifest = Invoke-RestMethod "https://echobird.ai/api/version/index.json" `
@@ -58,7 +62,7 @@ if (-not $latestVer) {
             $downloadUrl = "https://github.com/edison7009/EchoBird/releases/download/v$latestVer/EchoBird_${latestVer}_Windows_x64-setup.exe"
         }
     } catch {
-        Write-Host "  echobird.ai unreachable: $($_.Exception.Message)" -ForegroundColor Red
+        # Silent — the unified "both lookups failed" message below covers it.
     }
 }
 
