@@ -1,0 +1,23 @@
+{
+  "_comment": "EchoBird-owned pinned items injected into the pulse feed by scripts/inject_pinned.py. The 'position' field is 1-indexed against the Rust-side effective_ts sort: position 3 means '3rd visible item'. Title shows in the feed as-is. URL must be canonical (echobird.ai/...).",
+  "zh": [
+    {
+      "position": 3,
+      "site_id": "echobird",
+      "site_name": "EchoBird 官方",
+      "source": "EchoBird",
+      "title": "白嫖 OpenRouter 免费模型:每天 50 次免费请求跑顶尖大模型(官方教程)",
+      "url": "https://echobird.ai/openrouter/"
+    }
+  ],
+  "en": [
+    {
+      "position": 3,
+      "site_id": "echobird",
+      "site_name": "EchoBird Official",
+      "source": "EchoBird",
+      "title": "Free LLMs on OpenRouter: 50 requests/day to top-tier models (Official Guide)",
+      "url": "https://echobird.ai/openrouter/"
+    }
+  ]
+}
