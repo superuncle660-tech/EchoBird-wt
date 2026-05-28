@@ -577,11 +577,11 @@
                         <p>
                             然后在顶部搜索框输入 <code>free</code>，会列出所有当前免费可用的模型。挑一个你想用的(比如最新的
                             <code>deepseek</code> / <code>qwen</code> / <code>llama</code> 系列)，
-                            把它的<strong>模型 ID</strong> 也复制下来 —— 一般长这样:<code>deepseek/deepseek-v4-flash</code>。
+                            把它的<strong>模型 ID</strong> 也复制下来 —— 一般长这样:<code>deepseek/deepseek-v4-flash:free</code>。
                         </p>
                         <div class="callout">
                             <strong>注意:</strong>OpenRouter 的免费模型 ID 在结尾会有 <code>:free</code> 后缀,
-                            <strong>粘贴时不要带这个后缀</strong>。
+                            <strong>粘贴时要带上这个后缀</strong> —— 去掉就会变成付费版。
                         </div>
                     </div>
                     <div class="shot-wrap">
@@ -611,8 +611,8 @@
                         <p>
                             ① <strong>名称</strong> 就是个标签，你能认出来就行，随便起。<br>
                             ② <strong>模型 ID</strong> 才是真正传给 API 的字段，粘贴刚才复制的那个，例如
-                            <code>deepseek/deepseek-v4-flash</code>，<strong>把结尾的 <code>:free</code> 去掉</strong> ——
-                            EchoBird 会自动帮你走免费通道。<br>
+                            <code>deepseek/deepseek-v4-flash:free</code>，<strong>结尾的 <code>:free</code> 要保留</strong> ——
+                            带 <code>:free</code> 才会走免费版，去掉会变成付费版。<br>
                             ③ <strong>OpenAI 地址</strong> 已经自动填好，无需改动。<br>
                             ④ <strong>API 密钥</strong> 粘贴你在 OpenRouter 申请的那个 Key。<br>
                             ⑤ 点 <strong>保存</strong>。
@@ -630,7 +630,7 @@
                             </div>
                             <div>
                                 <img src="./3.png" alt="填写模型 ID 和 API Key" loading="lazy">
-                                <div class="caption">图 3 · 填模型 ID 与 API Key，不要带 :free 后缀</div>
+                                <div class="caption">图 3 · 填模型 ID 与 API Key，保留 :free 后缀</div>
                             </div>
                         </div>
                     </div>
@@ -736,11 +736,11 @@
                             Type <code>free</code> in the search box at the top — every currently-free model will show up.
                             Pick one you want to try (the newest <code>deepseek</code> / <code>qwen</code> / <code>llama</code>
                             family is a good start) and copy its <strong>model ID</strong>. It looks like
-                            <code>deepseek/deepseek-v4-flash</code>.
+                            <code>deepseek/deepseek-v4-flash:free</code>.
                         </p>
                         <div class="callout">
                             <strong>Heads up:</strong> Free models on OpenRouter show a <code>:free</code> suffix —
-                            <strong>strip it before pasting</strong>.
+                            <strong>keep it when you paste</strong> (dropping it switches to the paid variant).
                         </div>
                     </div>
                     <div class="shot-wrap">
@@ -770,8 +770,8 @@
                         <p>
                             ① <strong>Name</strong> is just a label — type anything you'll recognise.<br>
                             ② <strong>Model ID</strong> is the field that gets sent to the API — paste the ID you
-                            copied, e.g. <code>deepseek/deepseek-v4-flash</code>, and
-                            <strong>strip the <code>:free</code> suffix</strong>. EchoBird routes free traffic for you.<br>
+                            copied, e.g. <code>deepseek/deepseek-v4-flash:free</code>, and
+                            <strong>keep the <code>:free</code> suffix</strong> — it selects the free variant; dropping it bills you for the paid one.<br>
                             ③ <strong>OpenAI URL</strong> is pre-filled — leave it alone.<br>
                             ④ <strong>API Key</strong>: paste the OpenRouter key.<br>
                             ⑤ Hit <strong>Save</strong>.
@@ -789,7 +789,7 @@
                             </div>
                             <div>
                                 <img src="./3en.png" alt="Fill in the Model ID and API Key" loading="lazy">
-                                <div class="caption">Fig 3 · Model ID must drop the :free suffix</div>
+                                <div class="caption">Fig 3 · Model ID must keep the :free suffix</div>
                             </div>
                         </div>
                     </div>
