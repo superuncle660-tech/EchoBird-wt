@@ -254,6 +254,7 @@ const zhHans: Partial<Translations> = {
   'mother.hintSecurityAudit': '检测可疑活动',
   'mother.hintDetectCuda': '检测CUDA模块状态',
   'mother.hintInstallCuda': '帮我安装CUDA模块',
+  'mother.hintInstallGit': '帮我安装 Git',
   'mother.hintSetCodexLocale': '设置 Codex 桌面端为简体中文',
   'mother.hintUnlockCodexPlugins': '帮我解锁 Codex 桌面端的插件',
   'mother.hintSetClaudeLocale': '设置 Claude 桌面端为简体中文',

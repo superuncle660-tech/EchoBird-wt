@@ -256,6 +256,7 @@ const zhHant: Partial<Translations> = {
   'mother.hintSecurityAudit': '偵測可疑活動',
   'mother.hintDetectCuda': '檢測 CUDA 模組狀態',
   'mother.hintInstallCuda': '幫我安裝 CUDA 模組',
+  'mother.hintInstallGit': '幫我安裝 Git',
   'mother.hintSetCodexLocale': '設定 Codex 桌面端為繁體中文',
   'mother.hintUnlockCodexPlugins': '幫我解鎖 Codex 桌面端的插件',
   'mother.hintSetClaudeLocale': '設定 Claude 桌面端為繁體中文',

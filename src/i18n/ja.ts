@@ -262,6 +262,7 @@ const ja: Partial<Translations> = {
   'mother.hintSecurityAudit': '不審なアクティビティを検出',
   'mother.hintDetectCuda': 'CUDA モジュールの状態を確認',
   'mother.hintInstallCuda': 'CUDA モジュールのインストールを支援',
+  'mother.hintInstallGit': 'Git のインストールを支援',
   'mother.hintSetCodexLocale': 'Codex デスクトップを日本語に設定',
   'mother.hintUnlockCodexPlugins': 'Codex デスクトップのプラグインを解放する',
   'mother.parasiteTipInstalled':

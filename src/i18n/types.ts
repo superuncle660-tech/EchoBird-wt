@@ -224,6 +224,7 @@ export type TKey =
   | 'mother.hintSecurityAudit'
   | 'mother.hintDetectCuda'
   | 'mother.hintInstallCuda'
+  | 'mother.hintInstallGit'
   | 'mother.hintSetCodexLocale'
   | 'mother.hintUnlockCodexPlugins'
   | 'mother.hintSetClaudeLocale'

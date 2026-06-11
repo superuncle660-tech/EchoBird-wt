@@ -288,6 +288,7 @@ const en: Translations = {
   'mother.hintSecurityAudit': 'Detect suspicious activity',
   'mother.hintDetectCuda': 'Detect CUDA module status',
   'mother.hintInstallCuda': 'Help me install CUDA modules',
+  'mother.hintInstallGit': 'Help me install Git',
   'mother.hintSetCodexLocale': 'Set Codex Desktop to English',
   'mother.hintUnlockCodexPlugins': 'Help me unlock Codex Desktop plugins',
   // Intentionally empty: the Claude Chinese-patch chip is shown only for
