@@ -40,3 +40,7 @@ tauri-plugin-shell = "2"
 # dialog. Runtime init lives in echobird_core; this declaration exists
 # so capabilities/default.json's `dialog:*` permissions resolve.
 tauri-plugin-dialog = "2"
+# Clipboard plugin powers the API-key field's paste button (read-text).
+# Runtime init lives in echobird_core; this declaration exists so
+# capabilities/default.json's `clipboard-manager:allow-read-text` resolves.
+tauri-plugin-clipboard-manager = "2"
