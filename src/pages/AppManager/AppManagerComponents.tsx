@@ -520,7 +520,7 @@ export const AppManagerPanel: React.FC = () => {
           )}
           {show1mToggle && (
             <RoutingToggle
-              label={t('agent.claude1mLabel')}
+              label="1M"
               hint={t('agent.claude1mHint')}
               checked={claude1mMode}
               onChange={setClaude1mMode}
