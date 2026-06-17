@@ -362,7 +362,7 @@ export const ModelListSection: React.FC<ModelListSectionProps> = ({
     return (
       <div className="h-full flex flex-col items-center justify-center gap-3 text-center">
         <BoxIcon size={28} className="text-cyber-text opacity-25" />
-        <p className="text-[12px] text-cyber-text-secondary font-mono leading-relaxed">
+        <p className="text-base text-cyber-text-secondary font-mono leading-relaxed">
           {t('agent.noModelsTitle')}
           <br />
           {t('agent.noModelsHintPre')}{' '}
@@ -526,7 +526,7 @@ export const AppManagerPanel: React.FC = () => {
           selectedToolData.noModelConfig ? (
             <div className="h-full flex flex-col items-center justify-center gap-3 text-center">
               <BoxIcon size={28} className="text-cyber-text opacity-25" />
-              <p className="text-[12px] text-cyber-text-secondary font-mono leading-relaxed">
+              <p className="text-base text-cyber-text-secondary font-mono leading-relaxed">
                 {t('agent.noModelConfig')}
               </p>
             </div>
