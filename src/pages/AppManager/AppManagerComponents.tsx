@@ -583,7 +583,7 @@ export const AppManagerPanel: React.FC = () => {
           {show1mToggle && (
             <RoutingToggle
               label="1M"
-              hint={t('agent.claude1mHint')}
+              hint={isClaudeDesktopApp ? t('agent.claude1mHintDesktop') : t('agent.claude1mHint')}
               copyCommand={isClaudeDesktopApp ? '/model claude-opus-4-8[1m]' : undefined}
               checked={claude1mMode}
               onChange={setClaude1mMode}
