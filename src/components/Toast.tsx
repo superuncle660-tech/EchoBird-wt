@@ -46,7 +46,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <ToastContext.Provider value={{ showToast, removeToast }}>
       {children}
-      <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2 w-full max-w-md pointer-events-none">
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] flex flex-col gap-2 w-full max-w-md pointer-events-none">
         {toasts.map((toast) => (
           <ToastItem key={toast.id} toast={toast} onRemove={removeToast} />
         ))}
@@ -110,9 +110,9 @@ const ToastItem: React.FC<{ toast: ToastMessage; onRemove: (id: string) => void 
                 border-l-4 ${getBorderColor()}
                 text-cyber-text
                 p-4 shadow-lg rounded-lg
-                transition-all duration-300 ease-in-out
-                ${isExiting ? 'translate-x-[120%] opacity-0' : 'translate-x-0 opacity-100'}
-                animate-in slide-in-from-right-1/2 fade-in
+                transition-all duration-300 ease-out
+                ${isExiting ? '-translate-y-3 opacity-0' : 'translate-y-0 opacity-100'}
+                animate-in slide-in-from-top-4 fade-in
                 group
                 flex items-start gap-3
             `}
