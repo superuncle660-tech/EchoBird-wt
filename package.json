@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "tools:sync": "robocopy tools D:\\build-output\\debug\\_up_\\tools /E /XO /NFL /NDL || exit 0",
+    "wt:build": "powershell -ExecutionPolicy Bypass -File scripts/wt-launcher/build-wt-launchers.ps1",
     "dev": "npm run tools:sync && cargo tauri dev",
     "build": "cargo tauri build",
     "preview": "vite preview",

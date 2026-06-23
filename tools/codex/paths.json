@@ -6,13 +6,14 @@
     ],
     "docs": "https://github.com/openai/codex",
     "command": "codex",
-    "startCommand": "codex",
     "envVar": "CODEX_PATH",
     "configDir": "~/.codex",
     "configFile": "~/.codex/config.toml",
     "requireConfigFile": false,
     "paths": {
         "win32": [
+            "%USERPROFILE%/.echobird/wrappers/echobird-wt-codex.exe",
+            "%USERPROFILE%/.echobird/wrappers/echobird-wt-codex.bat",
             "%APPDATA%/npm/codex.cmd",
             "%USERPROFILE%/scoop/shims/codex.exe",
             "%USERPROFILE%/.bun/bin/codex.exe",
